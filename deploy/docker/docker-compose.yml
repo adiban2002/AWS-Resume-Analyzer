@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  resume-analyzer:
+    build:
+      context: ../../
+      dockerfile: deploy/docker/Dockerfile
+    container_name: resume-analyzer
+    ports:
+      - "8001:8001"
+    restart: always
