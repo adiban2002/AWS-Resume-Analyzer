@@ -1,20 +1,38 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, File
 from app.utils.file_utils import save_upload_file
 from app.services.preprocessing import extract_text_from_pdf
+from app.services.nlp_engine import extract_skills
+from app.services.matching import match_skills
+from app.services.scoring import calculate_score
+from app.services.recommendations import generate_recommendations
 
 router = APIRouter()
 
-@router.post("/upload-jd")
-async def upload_job_description(file: UploadFile = File(...)):
-    if not file.filename.endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="Only PDF files allowed")
+@router.post("/analyze-match")
+async def analyze_match(resume: UploadFile = File(...), jd: UploadFile = File(...)):
 
-    file_path = save_upload_file(file)
+    resume_path = save_upload_file(resume)
+    jd_path = save_upload_file(jd)
 
-    extracted_text = extract_text_from_pdf(file_path)
+    resume_text = extract_text_from_pdf(resume_path)
+    jd_text = extract_text_from_pdf(jd_path)
+
+    resume_skills = extract_skills(resume_text)
+    jd_skills = extract_skills(jd_text)
+
+    match_result = match_skills(resume_skills, jd_skills)
+
+    score_result = calculate_score(
+        match_result["matched_count"],
+        match_result["total_required"]
+    )
+
+    recommendations = generate_recommendations(match_result["missing_skills"])
 
     return {
-        "jd_filename": file.filename,
-        "characters_extracted": len(extracted_text),
-        "preview": extracted_text[:500]
+        "resume_skills": resume_skills,
+        "jd_required_skills": jd_skills,
+        "match": match_result,
+        "score": score_result,
+        "recommendations": recommendations
     }
