@@ -8,7 +8,7 @@ app = FastAPI(title="AWS Resume Analyzer")
 
 app.include_router(upload.router)
 app.include_router(analyze.router)
-app.imclude_router(history.router)
+app.include_router(history.router)
 
 @app.get("/")
 def health_check():
