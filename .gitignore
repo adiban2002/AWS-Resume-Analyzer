@@ -1,0 +1,51 @@
+# -----------------------------
+# Python cache
+# -----------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtualenv (local only, never commit)
+venv/
+
+# Environment variables / secrets
+.env
+.env.*
+
+# -----------------------------
+# Logs & runtime files
+# -----------------------------
+*.log
+logs/
+
+# Uploaded resumes (user data)
+temp_uploads/
+
+# -----------------------------
+# ML / HuggingFace cache (huge)
+# -----------------------------
+.cache/
+huggingface/
+torch_cache/
+
+# -----------------------------
+# OS / IDE junk
+# -----------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# -----------------------------
+# Terraform state (VERY IMPORTANT to ignore)
+# -----------------------------
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# -----------------------------
+# AWS keys / certs
+# -----------------------------
+*.pem
+*.key

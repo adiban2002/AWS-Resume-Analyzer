@@ -1,0 +1,24 @@
+# Git
+.git
+.gitignore
+
+# Local python env (container has its own)
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Local uploads should never be baked into image
+temp_uploads/
+
+# ML cache (download fresh inside container)
+.cache/
+huggingface/
+
+# Logs
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
