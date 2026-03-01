@@ -1,51 +1,90 @@
-# -----------------------------
-# Python cache
-# -----------------------------
+# =====================================================
+# PYTHON
+# =====================================================
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
+*.so
+*.egg-info/
+*.egg
 
-# Virtualenv (local only, never commit)
+# Virtual environments
 venv/
+.venv/
+env/
 
 # Environment variables / secrets
 .env
 .env.*
+*.env
 
-# -----------------------------
-# Logs & runtime files
-# -----------------------------
+# =====================================================
+# LOGS & RUNTIME FILES
+# =====================================================
 *.log
 logs/
-
-# Uploaded resumes (user data)
+tmp/
+temp/
 temp_uploads/
 
-# -----------------------------
-# ML / HuggingFace cache (huge)
-# -----------------------------
+# =====================================================
+# ML / HuggingFace / Torch Cache (can become huge)
+# =====================================================
 .cache/
 huggingface/
 torch_cache/
+*.pt
+*.bin
 
-# -----------------------------
-# OS / IDE junk
-# -----------------------------
+# =====================================================
+# TERRAFORM (STATE FILES MUST NEVER BE COMMITTED)
+# =====================================================
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# =====================================================
+# DOCKER
+# =====================================================
+*.tar
+*.gz
+docker-compose.override.yml
+
+# =====================================================
+# NODE / FRONTEND
+# =====================================================
+node_modules/
+dist/
+build/
+
+# =====================================================
+# OS / IDE
+# =====================================================
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+*.swp
+*.swo
 
-# -----------------------------
-# Terraform state (VERY IMPORTANT to ignore)
-# -----------------------------
-*.tfstate
-*.tfstate.*
-.terraform/
-
-# -----------------------------
-# AWS keys / certs
-# -----------------------------
+# =====================================================
+# AWS / CERTIFICATES / KEYS
+# =====================================================
+.aws/
 *.pem
 *.key
+*.crt
+*.csr
+
+# =====================================================
+# TEST / COVERAGE
+# =====================================================
+.coverage
+htmlcov/
+.pytest_cache/
