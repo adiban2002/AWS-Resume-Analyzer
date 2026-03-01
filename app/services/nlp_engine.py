@@ -1,19 +1,7 @@
-import re
+from app.models.resume_parser import parse_resume
 
-SKILLS_DB = [
-    "aws", "docker", "kubernetes", "python", "terraform",
-    "ci/cd", "linux", "fastapi", "devops", "cloud",
-    "s3", "ec2", "git", "jenkins"
-]
 
 def extract_skills(text: str):
-    text_lower = text.lower()
+    parsed_data = parse_resume(text)
 
-    found_skills = []
-
-    for skill in SKILLS_DB:
-        pattern = r"\b" + re.escape(skill) + r"\b"
-        if re.search(pattern, text_lower):
-            found_skills.append(skill)
-
-    return list(set(found_skills))
+    return parsed_data["skills"]
