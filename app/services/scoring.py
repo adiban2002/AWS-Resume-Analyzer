@@ -1,17 +1,19 @@
-def calculate_score(matched_count: int, total_required: int):
-    if total_required == 0:
-        return 0
+def calculate_score(similarity_score: float):
+    """
+    Takes similarity score (0 to 1) from SageMaker
+    and converts it to percentage + assessment.
+    """
 
-    score = (matched_count / total_required) * 100
+    percentage = similarity_score * 100
 
-    if score >= 80:
+    if percentage >= 80:
         level = "Strong Match"
-    elif score >= 50:
+    elif percentage >= 50:
         level = "Moderate Match"
     else:
         level = "Low Match"
 
     return {
-        "match_percentage": round(score, 2),
+        "match_percentage": round(percentage, 2),
         "assessment": level
     }

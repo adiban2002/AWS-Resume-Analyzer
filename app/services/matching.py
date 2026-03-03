@@ -1,13 +1,19 @@
-def match_skills(resume_skills: list, jd_skills: list):
-    resume_set = set(skill.lower() for skill in resume_skills)
-    jd_set = set(skill.lower() for skill in jd_skills)
+from app.services.sagemaker_service import get_similarity_score
+from app.services.scoring import calculate_score
 
-    matched = resume_set.intersection(jd_set)
-    missing = jd_set.difference(resume_set)
+
+def match_resume_with_jd(resume_text: str, jd_text: str):
+
+    result = get_similarity_score(resume_text, jd_text)
+
+    if "error" in result:
+        return result
+
+    similarity = result.get("similarity_score", 0)
+
+    score_data = calculate_score(similarity)
 
     return {
-        "matched_skills": sorted(list(matched)),
-        "missing_skills": sorted(list(missing)),
-        "total_required": len(jd_set),
-        "matched_count": len(matched)
+        "similarity_score": similarity,
+        **score_data
     }
