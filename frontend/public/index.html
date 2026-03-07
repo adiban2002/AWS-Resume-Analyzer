@@ -1,60 +1,106 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
 <title>AWS Resume Analyzer</title>
+
 <style>
-body {
-  font-family: Arial;
-  margin: 40px;
+
+body{
+font-family: Arial;
+margin:40px;
+background:#f4f6f8;
 }
-button {
-  padding: 10px;
+
+.container{
+max-width:600px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
+
+button{
+padding:10px 20px;
+background:#ff9900;
+border:none;
+color:white;
+cursor:pointer;
+border-radius:5px;
+}
+
+button:hover{
+background:#e68a00;
+}
+
 </style>
+
 </head>
 
 <body>
 
+<div class="container">
+
 <h1>AWS Resume Analyzer</h1>
 
 <form id="uploadForm">
-  <label>Upload Resume:</label><br>
-  <input type="file" id="resume" required><br><br>
 
-  <label>Upload Job Description:</label><br>
-  <input type="file" id="jd" required><br><br>
+<label>Upload Resume</label><br>
+<input type="file" id="resume" required><br><br>
 
-  <button type="submit">Analyze Match</button>
+<label>Upload Job Description</label><br>
+<input type="file" id="jd" required><br><br>
+
+<button type="submit">Analyze Match</button>
+
 </form>
 
 <h2>Result</h2>
-<pre id="result"></pre>
+
+<pre id="result">Waiting...</pre>
+
+</div>
 
 <script>
 
-const API_URL = "http://35.154.73.87:8001/analyze-match";
+const API_URL = "/analyze-match";
 
-document.getElementById("uploadForm").onsubmit = async (e) => {
+document.getElementById("uploadForm").onsubmit = async (e)=>{
 
-  e.preventDefault();
+e.preventDefault();
 
-  const formData = new FormData();
+const resultBox = document.getElementById("result");
 
-  formData.append("resume", document.getElementById("resume").files[0]);
-  formData.append("jd", document.getElementById("jd").files[0]);
+const formData = new FormData();
 
-  const response = await fetch(API_URL, {
-    method: "POST",
-    body: formData
-  });
+formData.append("resume", document.getElementById("resume").files[0]);
+formData.append("jd", document.getElementById("jd").files[0]);
 
-  const data = await response.json();
+resultBox.textContent="Analyzing...";
 
-  document.getElementById("result").textContent =
-    JSON.stringify(data, null, 2);
+try{
+
+const response = await fetch(API_URL,{
+method:"POST",
+body:formData
+});
+
+const data = await response.json();
+
+resultBox.textContent=JSON.stringify(data,null,2);
+
+}catch(err){
+
+resultBox.textContent="Error: "+err;
+
+}
+
 };
 
 </script>
 
 </body>
+
 </html>
