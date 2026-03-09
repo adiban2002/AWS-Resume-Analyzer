@@ -34,7 +34,10 @@ jobs:
 
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -var="ec2_ami=ami-0f58b397bc5c1f2e8"
+        run: |
+          terraform apply -auto-approve \
+          -var="ec2_ami=ami-0f58b397bc5c1f2e8" \
+          -var="sagemaker_execution_role=${{ secrets.SAGEMAKER_EXECUTION_ROLE }}"
         working-directory: ./infra/terraform
 
 
