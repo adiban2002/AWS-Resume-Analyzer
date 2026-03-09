@@ -2,23 +2,46 @@
 .git
 .gitignore
 
-# Local python env (container has its own)
+# Python virtual env
 venv/
+.venv/
 
 # Python cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-# Local uploads should never be baked into image
+# Environment files
+.env
+.env.*
+
+# Terraform state (never inside container)
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Local uploads
 temp_uploads/
+tmp/
+temp/
 
-# ML cache (download fresh inside container)
+# ML cache
 .cache/
 huggingface/
+torch_cache/
 
 # Logs
 *.log
+logs/
+
+# Node modules
+node_modules/
 
 # OS junk
 .DS_Store
 Thumbs.db
+
+# IDE
+.vscode/
+.idea/

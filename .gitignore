@@ -14,13 +14,15 @@ venv/
 .venv/
 env/
 
-# Environment variables / secrets
+# =====================================================
+# ENVIRONMENT / SECRETS
+# =====================================================
 .env
 .env.*
 *.env
 
 # =====================================================
-# LOGS & RUNTIME FILES
+# LOGS & TEMP FILES
 # =====================================================
 *.log
 logs/
@@ -29,7 +31,7 @@ temp/
 temp_uploads/
 
 # =====================================================
-# ML / HuggingFace / Torch Cache (can become huge)
+# ML / MODEL CACHE
 # =====================================================
 .cache/
 huggingface/
@@ -38,11 +40,11 @@ torch_cache/
 *.bin
 
 # =====================================================
-# TERRAFORM (STATE FILES MUST NEVER BE COMMITTED)
+# TERRAFORM
 # =====================================================
+.terraform/
 *.tfstate
 *.tfstate.*
-.terraform/
 crash.log
 override.tf
 override.tf.json
@@ -50,14 +52,14 @@ override.tf.json
 *_override.tf.json
 
 # =====================================================
-# DOCKER
+# DOCKER ARTIFACTS
 # =====================================================
 *.tar
 *.gz
 docker-compose.override.yml
 
 # =====================================================
-# NODE / FRONTEND
+# FRONTEND / NODE
 # =====================================================
 node_modules/
 dist/
@@ -74,7 +76,7 @@ Thumbs.db
 *.swo
 
 # =====================================================
-# AWS / CERTIFICATES / KEYS
+# AWS / KEYS / CERTIFICATES
 # =====================================================
 .aws/
 *.pem
