@@ -140,29 +140,3 @@ resource "aws_cloudfront_distribution" "cdn" {
     Environment = "dev"
   }
 }
-
-################################
-# SAGEMAKER ENDPOINT CONFIG (OPTIONAL)
-################################
-
-# resource "aws_sagemaker_endpoint_configuration" "endpoint_config" {
-#
-#   name = "resume-analyzer-endpoint-config"
-#
-#   production_variants {
-#     variant_name           = "AllTraffic"
-#     model_name             = aws_sagemaker_model.resume_model.name
-#     instance_type          = "ml.t2.medium"
-#     initial_instance_count = 1
-#   }
-# }
-
-################################
-# SAGEMAKER ENDPOINT (OPTIONAL)
-################################
-
-# resource "aws_sagemaker_endpoint" "resume_endpoint" {
-#
-#   name                 = "resume-analyzer-endpoint"
-#   endpoint_config_name = aws_sagemaker_endpoint_configuration.endpoint_config.name
-# }
