@@ -37,7 +37,8 @@ jobs:
         run: |
           terraform apply -auto-approve \
           -var="ec2_ami=ami-0f58b397bc5c1f2e8" \
-          -var="sagemaker_execution_role=${{ secrets.SAGEMAKER_EXECUTION_ROLE }}"
+          -var="sagemaker_execution_role=${{ secrets.SAGEMAKER_EXECUTION_ROLE }}" \
+          -var="sagemaker_image=800557028391.dkr.ecr.ap-south-1.amazonaws.com/resume-analyzer"
         working-directory: ./infra/terraform
 
 
