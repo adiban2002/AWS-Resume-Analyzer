@@ -6,8 +6,15 @@ resource "aws_s3_bucket" "frontend_bucket" {
 
   bucket = var.frontend_bucket_name
 
+  force_destroy = true
+
   tags = {
-    Name = "resume-analyzer-frontend"
+    Name        = "resume-analyzer-frontend"
+    Environment = "dev"
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
 
@@ -19,8 +26,15 @@ resource "aws_s3_bucket" "storage_bucket" {
 
   bucket = var.storage_bucket_name
 
+  force_destroy = true
+
   tags = {
-    Name = "resume-analyzer-storage"
+    Name        = "resume-analyzer-storage"
+    Environment = "dev"
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
 
@@ -41,7 +55,12 @@ resource "aws_dynamodb_table" "resume_analysis" {
   }
 
   tags = {
-    Name = "resume-analysis-table"
+    Name        = "resume-analysis-table"
+    Environment = "dev"
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
 
@@ -51,17 +70,23 @@ resource "aws_dynamodb_table" "resume_analysis" {
 
 resource "aws_instance" "api_server" {
 
-  ami           = "ami-051a31ab2f4d498f5"
+  ami           = var.ec2_ami
   instance_type = var.ec2_instance_type
 
   tags = {
-    Name = "resume-analyzer-test-instance"
+    Name        = "resume-analyzer-api"
+    Environment = "dev"
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
 
 ################################
 # CLOUDFRONT CDN
 ################################
+
 resource "aws_cloudfront_distribution" "cdn" {
 
   enabled = true
@@ -69,12 +94,15 @@ resource "aws_cloudfront_distribution" "cdn" {
   origin {
     domain_name = aws_s3_bucket.frontend_bucket.bucket_regional_domain_name
     origin_id   = "s3-origin"
+
+    s3_origin_config {
+      origin_access_identity = ""
+    }
   }
 
   default_cache_behavior {
 
-    target_origin_id = "s3-origin"
-
+    target_origin_id       = "s3-origin"
     viewer_protocol_policy = "redirect-to-https"
 
     allowed_methods = [
@@ -97,7 +125,6 @@ resource "aws_cloudfront_distribution" "cdn" {
     }
   }
 
-  # REQUIRED BLOCK
   restrictions {
     geo_restriction {
       restriction_type = "none"
@@ -107,9 +134,15 @@ resource "aws_cloudfront_distribution" "cdn" {
   viewer_certificate {
     cloudfront_default_certificate = true
   }
+
+  tags = {
+    Name        = "resume-analyzer-cdn"
+    Environment = "dev"
+  }
 }
+
 ################################
-# SAGEMAKER ENDPOINT CONFIG (DISABLED)
+# SAGEMAKER ENDPOINT CONFIG (OPTIONAL)
 ################################
 
 # resource "aws_sagemaker_endpoint_configuration" "endpoint_config" {
@@ -117,7 +150,6 @@ resource "aws_cloudfront_distribution" "cdn" {
 #   name = "resume-analyzer-endpoint-config"
 #
 #   production_variants {
-#
 #     variant_name           = "AllTraffic"
 #     model_name             = aws_sagemaker_model.resume_model.name
 #     instance_type          = "ml.t2.medium"
@@ -126,7 +158,7 @@ resource "aws_cloudfront_distribution" "cdn" {
 # }
 
 ################################
-# SAGEMAKER ENDPOINT (DISABLED)
+# SAGEMAKER ENDPOINT (OPTIONAL)
 ################################
 
 # resource "aws_sagemaker_endpoint" "resume_endpoint" {
