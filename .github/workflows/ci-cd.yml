@@ -34,7 +34,7 @@ jobs:
 
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -var="ec2_ami=ami-0f58b397bc5c1f2e8"
         working-directory: ./infra/terraform
 
 
