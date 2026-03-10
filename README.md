@@ -3,7 +3,7 @@
 ### Intelligent Resume Analysis using AWS + MLOps + DevOps
 
 Detect • Analyze • Score • Recommend
-AI-Powered Resume Evaluation using **SageMaker Inference**
+AI-Powered Resume Evaluation using SageMaker Inference
 
 ---
 
